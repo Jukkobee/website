@@ -54,7 +54,7 @@ button {
     padding: 8px 16px;
     border: none;
     border-radius: 5px;
-    background-color: #d3bd1a;
+    background-color: #6dc317;
     color: white;
     cursor: pointer;
     font-size: 14px;
@@ -63,14 +63,6 @@ button {
 
 button:hover {
     background-color: #45a049;
-}
-
-#clear {
-    background-color: #f44336;
-}
-
-#clear:hover {
-    background-color: #da190b;
 }
 
 .slider-container {
@@ -95,6 +87,17 @@ button:hover {
     font-family: Comic Sans MS, sans-serif;
 }
 
+#landing-page button {
+    background-color: #4CAF50; /* Green */
+    font-size: 24px;
+    padding: 12px 24px;
+    border-radius: 8px;
+}
+
+#landing-page button:hover {
+    background-color: #388E3C;
+}
+
 #landing-page h1 {
     margin-bottom: 20px;
 }
@@ -108,3 +111,57 @@ button:hover {
 #drawing-page {
     display: none;
 }
+
+#draw {
+    background-color: #4CAF50; /* Green */
+    color: black;
+}
+
+#draw:hover {
+    background-color: #388E3C;
+}
+
+/* Erase Button Styling */
+#erase {
+    background-color: #FFD700; /* Yellow */
+    color: black;
+}
+
+#erase:hover {
+    background-color: #FFC107;
+}
+
+#clear {
+    background-color: #f44336;
+    color: black;
+}
+
+#clear:hover {
+    background-color: #da190b;
+}
+    /* Revolution Counter on Landing Page */
+#revolution-counter {
+    margin-top: 10px;
+    font-size: 18px;
+    color: #333;
+}
+
+#revolution-page {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(0, 145, 255);
+    color: rgb(0, 0, 0);
+    font-family: "Papyrus", sans-serif;
+    font-size: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0; /* Start transparent */
+    pointer-events: none; /* Ignore clicks while hidden */
+    transition: opacity 5s ease; /* Smooth fade-in effect */
+    z-index: 10; /* Make sure it overlays all content */
+}
+

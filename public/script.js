@@ -1,3 +1,13 @@
+// Initialize Revolution Counter from local storage
+let revolutionCounter = localStorage.getItem("revolutionCounter") || 0;
+document.getElementById("revolution-counter").textContent = `Revolution Counter: ${revolutionCounter}`;
+
+// function resetRevolutionCounter() {
+//     revolutionCounter = 0;
+//     localStorage.setItem("revolutionCounter", revolutionCounter);
+//     document.getElementById("revolution-counter").textContent = `Revolution Counter: ${revolutionCounter}`;
+// }
+
 // Cookie handling functions
 function setCookie(name, value, days) {
     let expires = "";
@@ -6,41 +16,77 @@ function setCookie(name, value, days) {
         date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
         expires = "; expires=" + date.toUTCString();
     }
-    document.cookie = name + "=" + (value || "") + expires + "; path=/";
+    document.cookie = `${name}=${value || ""}${expires}; path=/`;
 }
 
 function getCookie(name) {
-    const nameEQ = name + "=";
-    const ca = document.cookie.split(';');
-    for (let i = 0; i < ca.length; i++) {
-        let c = ca[i];
-        while (c.charAt(0) === ' ') c = c.substring(1, c.length);
-        if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+    const nameEQ = `${name}=`;
+    const cookies = document.cookie.split(';');
+    for (let cookie of cookies) {
+        cookie = cookie.trim();
+        if (cookie.startsWith(nameEQ)) return cookie.substring(nameEQ.length);
     }
     return null;
 }
-
-function checkForUsername() {
+// Run check on load
+// Load username and update welcome message on page load
+window.onload = function() {
     const username = getCookie("username");
     if (username) {
         document.getElementById("username").style.display = "none";
         document.getElementById("name-prompt").style.display = "none";
-        document.getElementById("welcome-message").textContent = `Welcome back ${username}! Let's have some fun!`;
+        document.getElementById("welcome-message").textContent = `Welcome back, ${username}! Let's have some fun!`;
     }
-}
+    // Set initial revolution counter from local storage
+    const revolutionCounter = localStorage.getItem("revolutionCounter") || 0;
+    document.getElementById("revolution-counter").textContent = `Revolution Counter: ${revolutionCounter}`;
+};
 
-// Run check on load
-window.onload = checkForUsername;
-
-
-// Landing Page: Handle start button click
 function startDrawingPage() {
     const username = document.getElementById('username').value || getCookie("username");
     if (username) {
+        setCookie("username", username, 30); // Store username for 30 days
         document.getElementById('landing-page').style.display = 'none';
         document.getElementById('drawing-page').style.display = 'block';
+        listenForJailbreak();
     }
 }
+
+// Listen for "jailbreak" typed in the drawing page
+function listenForJailbreak() {
+    let typedString = "";
+
+    document.addEventListener("keypress", (e) => {
+        typedString += e.key.toLowerCase();
+        if (typedString.includes("be free my child")) {
+            triggerRevolution();
+            typedString = "";
+        }
+    });
+}
+
+// Trigger Revolution Screen and update counter
+function triggerRevolution() {
+    // Display the revolution page and start fade-in effect
+    const revolutionPage = document.getElementById("revolution-page");
+    const username = getCookie("username") || "User";
+    revolutionPage.style.display = "flex"; // Make it visible for transition
+    revolutionPage.innerHTML = `<h1>Thank you, ${username}</h1>`;
+    revolutionPage.style.pointerEvents = "auto"; // Allow interactions once fully visible
+    setTimeout(() => {
+        revolutionPage.style.opacity = 1; // Trigger fade-in
+    }, 50); // Short delay to ensure display update
+
+    // Update Revolution Counter and save to local storage
+    revolutionCounter++;
+    localStorage.setItem("revolutionCounter", revolutionCounter);
+    document.getElementById("revolution-counter").textContent = `Revolution Counter: ${revolutionCounter}`;
+
+    setTimeout(() => {
+        document.getElementById("drawing-page").style.display = "none";
+    }, 5000); // Short delay
+}
+
 
 // Messages with weighted randomization
 function getRandomMessage() {
@@ -122,7 +168,7 @@ const sizeValue = document.getElementById('size-value');
 // Drawing state
 let isDrawing = false;
 let isErasing = true;
-let brushSize = 3;
+let brushSize = 2;
 let lastX = 0;
 let lastY = 0;
 

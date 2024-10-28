@@ -1,16 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Drawing Page</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <!-- Landing Page HTML -->
     <div id="landing-page">
         <h1 id="welcome-message">Welcome!</h1>
-        <label id="name-prompt" for="username">Enter your name:</label>
+        <label for="username" id="name-prompt">Enter your name:</label>
         <input type="text" id="username" placeholder="Your name">
         <button onclick="startDrawingPage()">Start</button>
+        <div id="revolution-counter">Revolution Counter: 0</div>
     </div>
+
+    <div id="welcome-message"></div>
 
     <!-- Drawing Page HTML -->
     <div id="drawing-page">
@@ -20,12 +26,17 @@
             <button id="clear">Clear</button>
             <div class="slider-container">
                 <label for="size-slider">Brush Size:</label>
-                <input type="range" id="size-slider" min="1" max="15" value="3">
-                <span id="size-value">3px</span>
+                <input type="range" id="size-slider" min="1" max="15" value="2">
+                <span id="size-value">2px</span>
             </div>
         </div>
         <div id="background-layer"></div>
         <canvas id="canvas-layer"></canvas>
+    </div>
+
+    <!-- Revolution Complete Page -->
+    <div id="revolution-page" style="display: none;">
+        <h1 id="thank-you-message"></h1>
     </div>
 
     <script src="script.js"></script>
